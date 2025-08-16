@@ -1,9 +1,9 @@
-/*
- *
- * You can use the following import statements
- * 
- * import javax.persistence.*;
- * 
- */
+package com.example.nxttrendz1.model;
 
-// Write your code here
+import javax.persistence.*;
+
+@Entity
+@Table("product")
+public class Review{
+    
+}

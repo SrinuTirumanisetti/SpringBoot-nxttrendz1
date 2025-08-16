@@ -1,13 +1,13 @@
-CREATE TABLE product if NOT EXISTS(
-    productId int PRIMARY KEY AUTO_INCREMENT,
-    productName TEXT ,
+CREATE TABLE IF NOT EXISTS product (
+    productId INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    productName VARCHAR(255),
     price DOUBLE
 );
 
-CREATE TABLE review if NOT EXISTS(
-    reviewId int PRIMARY KEY AUTO_INCREMENT,
-    reviewContent TEXT,
-    rating int,
-    productId int,
+CREATE TABLE IF NOT EXISTS review (
+    reviewId INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    reviewContent VARCHAR(255),
+    rating INT,
+    productId INT,
     FOREIGN KEY (productId) REFERENCES product(productId)
 );

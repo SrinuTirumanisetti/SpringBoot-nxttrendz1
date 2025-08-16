@@ -1,10 +1,9 @@
-INSERT INTO Product (productId, productName, price) VALUES
-(1, 'Smartphone', 599.99),
-(2, 'Laptop', 1299.99),
-(3, 'Gaming Console', 399.99);
+INSERT INTO product (productName, price) VALUES
+('Smartphone', 599.99),
+('Laptop', 1299.99),
+('Gaming Console', 399.99);
 
-
-INSERT INTO Review (reviewContent, rating, productId) VALUES
+INSERT INTO review (reviewContent, rating, productId) VALUES
 ('Great battery life!', 5, 1),
 ('Lags sometimes.', 3, 1),
 ('Perfect for my daily tasks!', 4, 2),
