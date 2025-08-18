@@ -21,4 +21,9 @@ public class ProductController{
     public Product addProduct(@RequestBody Product product){
         return productJpaService.addProduct(product);
     }
+
+    @GetMapping("/products/{productId}")
+    public Product getProductById(@PathVariable("productId") int productId){
+        return productJpaService.getProductById(productId);
+    }
 }

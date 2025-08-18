@@ -6,4 +6,5 @@ import java.util.List;
 public interface ProductRepository{
     List<Product> getProducts();
     Product addProduct(Product product);
+    Product getProductById(int productId);
 }

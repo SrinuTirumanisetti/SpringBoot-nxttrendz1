@@ -26,4 +26,15 @@ public class ProductJpaService implements ProductRepository{
     public Product addProduct(Product product){
        return productJpaRepository.save(product);
     }
+
+    @Override
+    public Product getProductById(int productId){
+        try{
+            Product product = productJpaRepository.findById(productId).get();
+            return product;
+        }
+        catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 }
