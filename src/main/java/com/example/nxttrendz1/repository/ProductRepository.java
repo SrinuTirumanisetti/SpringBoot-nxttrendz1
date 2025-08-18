@@ -7,4 +7,5 @@ public interface ProductRepository{
     List<Product> getProducts();
     Product addProduct(Product product);
     Product getProductById(int productId);
+    Product updateProduct(Product product,int productId);
 }

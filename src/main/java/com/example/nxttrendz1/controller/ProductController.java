@@ -26,4 +26,9 @@ public class ProductController{
     public Product getProductById(@PathVariable("productId") int productId){
         return productJpaService.getProductById(productId);
     }
+
+    @PutMapping("/products/{productId}")
+    public Product updateProduct(@RequestBody Product product,@PathVariable("productId") int productId){
+        return productJpaService.updateProduct(product,productId);
+    }
 }
