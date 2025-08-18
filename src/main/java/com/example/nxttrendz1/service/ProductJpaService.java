@@ -26,6 +26,4 @@ public class ProductJpaService implements ProductRepository{
     public Product addProduct(Product product){
        return productJpaRepository.save(product);
     }
-
-    //hello addProduct
 }

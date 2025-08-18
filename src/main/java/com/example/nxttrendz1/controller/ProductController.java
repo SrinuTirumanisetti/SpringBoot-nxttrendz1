@@ -5,14 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 import com.example.nxttrendz1.model.Product;
+import com.example.nxttrendz1.service.ProductJpaService;
 
 @RestController
 public class ProductController{
     @Autowired
     public ProductJpaService productJpaService;
 
-    @GetMapping
+    @GetMapping("/products")
     public List<Product> getProducts(){
         return productJpaService.getProducts();
+    }
+
+    @PostMapping("/products")
+    public Product addProduct(@RequestBody Product product){
+        return productJpaService.addProduct(product);
     }
 }
