@@ -8,4 +8,5 @@ public interface ProductRepository{
     Product addProduct(Product product);
     Product getProductById(int productId);
     Product updateProduct(Product product,int productId);
+    void deleteProduct(int productId);
 }
