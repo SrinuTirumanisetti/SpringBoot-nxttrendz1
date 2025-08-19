@@ -1,9 +1,8 @@
-/*
- *
- * You can use the following import statements
- * 
- * import java.util.ArrayList;
- * 
- */
+package com.example.nxttrendz1.repository;
 
-// Write your code here
+import com.example.nxttrendz1.model.Review;
+import java.util.List;
+
+public interface ReviewRepository {
+    List<Review> getAllReviews();
+}
