@@ -18,4 +18,9 @@ public class ReviewController {
     public List<Review> getAllReviews() {
         return reviewRepository.getAllReviews();
     }
+
+    @PostMapping("/products/reviews")
+    public Review addReview(@RequestBody Review review) {
+        return reviewRepository.addReview(review);
+    }
 }
