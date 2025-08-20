@@ -1,9 +1,16 @@
 package com.example.nxttrendz1.service;
 
 import com.example.nxttrendz1.model.Review;
+import com.example.nxttrendz1.model.Product;
 import com.example.nxttrendz1.repository.ReviewRepository;
 import com.example.nxttrendz1.repository.ReviewJpaRepository;
+import com.example.nxttrendz1.repository.ProductJpaRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +22,9 @@ public class ReviewJpaService implements ReviewRepository {
         this.reviewJpaRepository = reviewJpaRepository;
     }
 
+    @Autowired
+    public ProductJpaRepository productJpaRepository;
+    
     @Override
     public List<Review> getAllReviews() {
         return reviewJpaRepository.findAll();
@@ -22,6 +32,26 @@ public class ReviewJpaService implements ReviewRepository {
 
     @Override
     public Review addReview(Review review) {
+        Product product = review.getProduct();
+        int productId = product.getProductId();
+
+        Product completeProduct = productJpaRepository.findById(productId)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Product not found with id " + productId));
+
+        review.setProduct(completeProduct);
         return reviewJpaRepository.save(review);
+    }
+
+
+    @Override
+    public Review getProductReviews(int reviewId){
+        try{
+            Review review = reviewJpaRepository.findById(reviewId).get();
+            return review;
+        }
+        catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -5,22 +5,31 @@ import com.example.nxttrendz1.repository.ReviewRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import com.example.nxttrendz1.service.ReviewJpaService;
+
 @RestController
+@RequestMapping("/products")
 public class ReviewController {
 
-    private final ReviewRepository reviewRepository;
+    private final ReviewJpaService reviewJpaService;
 
-    public ReviewController(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
+    public ReviewController(ReviewJpaService reviewJpaService) {
+        this.reviewJpaService = reviewJpaService;
     }
 
-    @GetMapping("/products/reviews")
+    @GetMapping("/reviews")
     public List<Review> getAllReviews() {
-        return reviewRepository.getAllReviews();
+        return reviewJpaService.getAllReviews();
     }
 
-    @PostMapping("/products/reviews")
+    @PostMapping("/reviews")
     public Review addReview(@RequestBody Review review) {
-        return reviewRepository.addReview(review);
+        return reviewJpaService.addReview(review);
+    }
+
+    @GetMapping("/reviews/{reviewId}")
+    public Review getProductReviews(@PathVariable("reviewId") int reviewId){
+        return reviewJpaService.getProductReviews(reviewId);
     }
 }
+
