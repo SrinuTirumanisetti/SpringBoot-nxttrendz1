@@ -83,4 +83,12 @@ public class ReviewJpaService implements ReviewRepository {
 
         reviewRepository.delete(existingReview);
     }
+
+    @Override
+    public Product getProductByReviewId(int reviewId) {
+         Review review = reviewRepository.findById(reviewId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found"));
+        return review.getProduct();
+    }
+
 }

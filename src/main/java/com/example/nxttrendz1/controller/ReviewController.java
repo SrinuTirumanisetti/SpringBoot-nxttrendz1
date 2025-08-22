@@ -43,5 +43,9 @@ public class ReviewController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/reviews/{reviewId}/product")
+    public Product getProductByReviewId(@PathVariable int reviewId) {
+        return reviewJpaService.getProductByReviewId(reviewId);
+    }
 }
 
