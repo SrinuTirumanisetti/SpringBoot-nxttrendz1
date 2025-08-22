@@ -54,4 +54,26 @@ public class ReviewJpaService implements ReviewRepository {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @Override
+    public Review updateReview(int reviewId, Review updatedReview) {
+
+        Review existingReview = reviewJpaRepository.findById(reviewId)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
+
+        existingReview.setReviewContent(updatedReview.getReviewContent());
+        existingReview.setRating(updatedReview.getRating());
+
+        if (updatedReview.getProduct() != null) {
+            int productId = updatedReview.getProduct().getProductId();
+            Product product = productJpaRepository.findById(productId)
+                .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Product not found with id " + productId));
+            existingReview.setProduct(product);
+        }
+
+        return reviewJpaRepository.save(existingReview);
+    }
+
 }
