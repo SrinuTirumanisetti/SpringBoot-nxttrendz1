@@ -31,5 +31,10 @@ public class ReviewController {
     public Review getProductReviews(@PathVariable("reviewId") int reviewId){
         return reviewJpaService.getProductReviews(reviewId);
     }
+
+    @PutMapping("/reviews/{reviewId}")
+    public Review updateReview(@PathVariable int reviewId, @RequestBody Review review) {
+        return reviewJpaService.updateReview(reviewId, review);
+    }
 }
 
