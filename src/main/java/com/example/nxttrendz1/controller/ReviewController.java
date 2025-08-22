@@ -36,5 +36,12 @@ public class ReviewController {
     public Review updateReview(@PathVariable int reviewId, @RequestBody Review review) {
         return reviewJpaService.updateReview(reviewId, review);
     }
+
+    @DeleteMapping("/products/reviews/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable int reviewId) {
+        reviewJpaService.deleteReview(reviewId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
 
