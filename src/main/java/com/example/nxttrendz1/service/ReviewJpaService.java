@@ -10,21 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
 public class ReviewJpaService implements ReviewRepository {
 
     private final ReviewJpaRepository reviewJpaRepository;
-
-    public ReviewJpaService(ReviewJpaRepository reviewJpaRepository) {
-        this.reviewJpaRepository = reviewJpaRepository;
-    }
+    private final ProductJpaRepository productJpaRepository;
 
     @Autowired
-    public ProductJpaRepository productJpaRepository;
-    
+    public ReviewJpaService(ReviewJpaRepository reviewJpaRepository, ProductJpaRepository productJpaRepository) {
+        this.reviewJpaRepository = reviewJpaRepository;
+        this.productJpaRepository = productJpaRepository;
+    }
+
     @Override
     public List<Review> getAllReviews() {
         return reviewJpaRepository.findAll();
@@ -43,21 +43,15 @@ public class ReviewJpaService implements ReviewRepository {
         return reviewJpaRepository.save(review);
     }
 
-
     @Override
-    public Review getProductReviews(int reviewId){
-        try{
-            Review review = reviewJpaRepository.findById(reviewId).get();
-            return review;
-        }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    public Review getProductReviews(int reviewId) {
+        return reviewJpaRepository.findById(reviewId)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
     }
 
     @Override
     public Review updateReview(int reviewId, Review updatedReview) {
-
         Review existingReview = reviewJpaRepository.findById(reviewId)
             .orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
@@ -78,17 +72,18 @@ public class ReviewJpaService implements ReviewRepository {
 
     @Override
     public void deleteReview(int reviewId) {
-        Review existingReview = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found"));
+        Review existingReview = reviewJpaRepository.findById(reviewId)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
 
-        reviewRepository.delete(existingReview);
+        reviewJpaRepository.delete(existingReview);
     }
 
     @Override
     public Product getProductByReviewId(int reviewId) {
-         Review review = reviewRepository.findById(reviewId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found"));
+        Review review = reviewJpaRepository.findById(reviewId)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
         return review.getProduct();
     }
-
 }

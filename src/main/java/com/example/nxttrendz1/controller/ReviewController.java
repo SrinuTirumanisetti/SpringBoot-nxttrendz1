@@ -1,6 +1,7 @@
 package com.example.nxttrendz1.controller;
 
 import com.example.nxttrendz1.model.Review;
+import com.example.nxttrendz1.model.Product;
 import com.example.nxttrendz1.repository.ReviewRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.List;
 import com.example.nxttrendz1.service.ReviewJpaService;
 
 @RestController
-@RequestMapping("/products")
 public class ReviewController {
 
     private final ReviewJpaService reviewJpaService;
@@ -17,31 +17,31 @@ public class ReviewController {
         this.reviewJpaService = reviewJpaService;
     }
 
-    @GetMapping("/reviews")
+    @GetMapping("/products/reviews")
     public List<Review> getAllReviews() {
         return reviewJpaService.getAllReviews();
     }
 
-    @PostMapping("/reviews")
+    @PostMapping("/products/reviews")
     public Review addReview(@RequestBody Review review) {
         return reviewJpaService.addReview(review);
     }
 
-    @GetMapping("/reviews/{reviewId}")
+    @GetMapping("/products/reviews/{reviewId}")
     public Review getProductReviews(@PathVariable("reviewId") int reviewId){
         return reviewJpaService.getProductReviews(reviewId);
     }
 
-    @PutMapping("/reviews/{reviewId}")
+    @PutMapping("/products/reviews/{reviewId}")
     public Review updateReview(@PathVariable int reviewId, @RequestBody Review review) {
         return reviewJpaService.updateReview(reviewId, review);
     }
 
     @DeleteMapping("/products/reviews/{reviewId}")
-    public ResponseEntity<Void> deleteReview(@PathVariable int reviewId) {
+    public void deleteReview(@PathVariable int reviewId) {
         reviewJpaService.deleteReview(reviewId);
-        return ResponseEntity.noContent().build();
     }
+
 
     @GetMapping("/reviews/{reviewId}/product")
     public Product getProductByReviewId(@PathVariable int reviewId) {
