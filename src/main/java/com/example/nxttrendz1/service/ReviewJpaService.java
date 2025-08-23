@@ -72,11 +72,12 @@ public class ReviewJpaService implements ReviewRepository {
 
     @Override
     public void deleteReview(int reviewId) {
-        Review existingReview = reviewJpaRepository.findById(reviewId)
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Review not found with id " + reviewId));
-
-        reviewJpaRepository.delete(existingReview);
+        if(reviewJpaRepository.existsById(reviewId)){
+            reviewJpaRepository.deleteById(reviewId);
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        }else {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
